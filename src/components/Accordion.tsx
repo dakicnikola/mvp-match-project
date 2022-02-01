@@ -2,8 +2,23 @@ import React from 'react'
 import {Collapse, Table} from 'antd'
 import {useTranslation} from 'react-i18next'
 
-const Accordion = () => {
-  // const {t} = useTranslation()
+type TAccordionProps = {
+  data: TPanel[]
+}
+
+type TPanel = {
+  name: string,
+  id: string,
+  tableRows: TRow[]
+}
+
+type TRow = {
+  date: string | number
+  transactionId: string
+  amount: string
+}
+
+const Accordion = ({data}: TAccordionProps) => {
   const {t} = useTranslation('translation', {keyPrefix: 'reports.accordion'})
 
   const columns = [
@@ -29,7 +44,7 @@ const Accordion = () => {
       {data.map((panel) => (
         <Collapse.Panel
           header={panel.name}
-          key={panel.projectId}
+          key={panel.id}
           style={{
             background: '#FFFFFF',
             borderRadius: '10px',
@@ -42,42 +57,5 @@ const Accordion = () => {
     </Collapse>
   )
 }
-
-
-const data = [
-  {
-    'projectId': 'bgYhx',
-    'userIds': [
-      'rahej',
-    ],
-    'rule': 'Manual Selection',
-    'gatewayIds': [
-      'gDJ2s',
-    ],
-    'structure': 'Sole proprietorship',
-    'industry': 'IT',
-    'website': 'https://mvpmatch.co/',
-    'description': 'Sit amet luctus venenatis lectus magna fringilla urna porttitor.',
-    'image': 'https://mvpmatch.co/images/logo.svg',
-    'name': 'Project 1',
-  },
-  {
-    'projectId': 'ERdPQ',
-    'userIds': [
-      'rahej',
-    ],
-    'rule': 'Manual Selection',
-    'gatewayIds': [
-      'WU50G',
-    ],
-    'structure': 'Partnership',
-    'industry': 'IT',
-    'website': 'https://mvpmatch.co/',
-    'description': 'Sit amet luctus venenatis lectus magna fringilla urna porttitor.',
-    'image': 'https://mvpmatch.co/images/logo.svg',
-    'name': 'Project 2',
-  },
-]
-
 
 export default Accordion

@@ -1,4 +1,4 @@
-import {Fragment} from 'react'
+import {Fragment, useState} from 'react'
 import {useTranslation} from 'react-i18next'
 import {Card, PageHeader, Space} from 'antd'
 
@@ -6,6 +6,16 @@ import Accordion from '../../components/Accordion'
 
 const Reports = () => {
   const {t} = useTranslation()
+
+  // const projects = useGetProjects()
+  //
+  // const projectsData = projects.isSuccess ? projects.data.map((project) => ({
+  //   name: project.name,
+  //   id: project.projectId,
+  //   tableRows: project.
+  // }))
+
+  const [filter, setFilter] = useState({})
 
   return (
     <Fragment>
@@ -22,9 +32,9 @@ const Reports = () => {
             style={{
               borderRadius: 10,
               background: '#F1FAFE',
-            }}>
-        <Accordion />
-
+            }}
+      >
+        <Accordion data={[]} />
       </Card>
     </Fragment>
   )
