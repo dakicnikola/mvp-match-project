@@ -1,6 +1,6 @@
 import Icon from '@ant-design/icons'
 import {ReactElement, useState} from 'react'
-import {Layout, Menu, Space} from 'antd'
+import {Layout, Menu, Space, Typography} from 'antd'
 import {useTranslation} from 'react-i18next'
 import {Link, Outlet, useLocation} from 'react-router-dom'
 
@@ -128,8 +128,18 @@ function Dashboard() {
             ))}
           </Menu>
         </Layout.Sider>
-        <Layout.Content style={{minHeight: 'calc(100vh - 64px)'}}>
+        <Layout.Content style={{
+          minHeight: 'calc(100vh - 64px - 70px)',
+          display: 'flex', flexDirection: 'column',
+        }}>
           <Outlet />
+          <Layout.Footer style={{backgroundColor: 'white'}}>
+            <Space>
+              <Typography.Link>{t('dashboard.termsAndConditions')}</Typography.Link>
+              <Typography.Link>|</Typography.Link>
+              <Typography.Link>{t('dashboard.privacyPolicy')}</Typography.Link>
+            </Space>
+          </Layout.Footer>
         </Layout.Content>
       </Layout>
     </Layout>

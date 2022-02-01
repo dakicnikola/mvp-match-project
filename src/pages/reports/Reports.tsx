@@ -1,6 +1,6 @@
 import {Button, Card, PageHeader, Space} from 'antd'
 import type {Moment} from 'moment'
-import {Fragment, useState} from 'react'
+import {Fragment, useRef, useState} from 'react'
 import {useTranslation} from 'react-i18next'
 
 import Accordion from '../../components/Accordion'
@@ -21,12 +21,12 @@ type TPaymentsByEntity = Record<string, {
   name: string
   payments: {
     date: string
-    gatewayId?: string
+    gatewayName?: string
     transactionId: string
     amount: number
   }[]
 }>
-type TReport = {
+export type TReport = {
   paymentsByProject: TPaymentsByEntity
   gatewayTotalAmount: number
   paymentsByGateway: TPaymentsByEntity
@@ -54,8 +54,10 @@ const Reports = () => {
   const projects = useGetProjects()
   const gateways = useGetGateways()
 
-  const oneProject = Boolean(filter.projectId)
-  const oneGateway = Boolean(filter.gatewayId)
+  const filteredBy = useRef({
+    oneProject: Boolean(filter.projectId),
+    oneGateway: Boolean(filter.gatewayId),
+  })
 
   const allProjectsOrOneGatewayReducer = (acc: TReport, payment: TPayment) => {
     if (!acc.paymentsByProject[payment.projectId]) {
@@ -69,11 +71,11 @@ const Reports = () => {
     project.totalAmount += payment.amount
     project.payments.push({
       date: payment.created,
-      gatewayId: payment.gatewayId,
+      gatewayName: gateways.data?.gatewaysById[payment.gatewayId].name,
       transactionId: payment.paymentId,
       amount: payment.amount,
     })
-    if (oneGateway) {
+    if (filteredBy.current.oneGateway) {
       acc.gatewayTotalAmount += payment.amount
     }
     return acc
@@ -102,7 +104,7 @@ const Reports = () => {
       if (data.code !== '200') {
         setReport(defaultReport)
       }
-      if (!oneProject || oneGateway) {
+      if (!filteredBy.current.oneProject || filteredBy.current.oneGateway) {
         setReport(
           data.data.reduce(allProjectsOrOneGatewayReducer, {
             paymentsByProject: {},
@@ -122,6 +124,9 @@ const Reports = () => {
   const [report, setReport] = useState<TReport>(defaultReport)
 
   const generateReport = async () => {
+    filteredBy.current.oneProject = Boolean(filter.projectId)
+    filteredBy.current.oneGateway = Boolean(filter.gatewayId)
+
     await postReport.mutateAsync({
       projectId: filter.projectId,
       gatewayId: filter.gatewayId,
@@ -149,8 +154,15 @@ const Reports = () => {
             </Button>
           </Space>}
       />
-      <Card bordered={false} style={{borderRadius: 10, background: '#F1FAFE'}}>
-        <Accordion data={[]} />
+      <Card bordered={false} style={{borderRadius: 10, background: '#F1FAFE', height: '100%'}}
+            loading={postReport.isLoading}
+            bodyStyle={{height: '100%'}}
+      >
+        <Accordion
+          data={report}
+          oneGateway={filteredBy.current.oneGateway}
+          oneProject={filteredBy.current.oneProject}
+        />
       </Card>
     </Fragment>
   )

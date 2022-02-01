@@ -6,7 +6,9 @@
       "transaction": "Transaction",
       "reports": "Reports",
       "settings": "Settings"
-    }
+    },
+    "termsAndConditions": "Terms&Conditions",
+    "privacyPolicy": "Privacy policy"
   },
   "reports": {
     "title": "Reports",
@@ -19,10 +21,16 @@
       "generateReport": "Generate report"
     },
     "accordion": {
+      "noReports": {
+        "title": "No reports",
+        "subtitle": "Currently you have no data for the reports to be generated.<br/>Once you start generating traffic through the Balance application the reports will be shown."
+      },
       "table": {
+        "totalAmount": "TOTAL: {{amount}}",
         "columns": {
           "date": "Date",
           "transactionId": "Transaction ID",
+          "gatewayName": "Gateway name",
           "amount": "Amount"
         }
       }
