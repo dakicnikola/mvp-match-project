@@ -1,12 +1,5 @@
 import {pathname_reports} from '../../config/routes'
-
-const Reports = () => {
-  return (
-    <div>
-      Reports
-    </div>
-  )
-}
+import Reports from './Reports'
 
 
 const reports = {

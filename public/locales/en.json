@@ -7,5 +7,25 @@
       "reports": "Reports",
       "settings": "Settings"
     }
+  },
+  "reports": {
+    "title": "Reports",
+    "subtitle": "Easily generate a report of your transactions",
+    "actions": {
+      "projects": "All projects",
+      "gateways": "All gateways",
+      "dateFrom": "From date",
+      "dateTo": "To date",
+      "generateReport": "Generate report"
+    },
+    "accordion": {
+      "table": {
+        "columns": {
+          "date": "Date",
+          "transactionId": "Transaction ID",
+          "amount": "Amount"
+        }
+      }
+    }
   }
 }

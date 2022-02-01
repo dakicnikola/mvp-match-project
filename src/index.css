@@ -66,6 +66,12 @@
     padding: 0 35px
 }
 
+.ant-page-header-heading-left {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+
 .test .ant-card-meta-title {
     white-space: normal;
     margin-bottom: 0 !important;
@@ -73,6 +79,9 @@
 
 .ant-card-head-title {
     white-space: normal;
+}
+.ant-collapse {
+    border: none
 }
 
 .ant-card-actions li {
