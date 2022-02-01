@@ -1,0 +1,11 @@
+{
+  "dashboard": {
+    "nav": {
+      "payment": "Payment",
+      "board": "Board",
+      "transaction": "Transaction",
+      "reports": "Reports",
+      "settings": "Settings"
+    }
+  }
+}
