@@ -23,5 +23,5 @@ type TGateway = {
   'description': string,
 }
 
-export type {TGatewaysResponse}
+export type {TGatewaysResponse, TGateway}
 export {getGateways}

@@ -26,5 +26,5 @@ type TProject = {
   name: string
 }
 
-export type {TProjectsResponse}
+export type {TProjectsResponse, TProject}
 export {getProjects}

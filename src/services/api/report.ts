@@ -10,9 +10,21 @@ async function postReportFilter(
 }
 
 
-type TPostReportResponse = TPayments[]
+type TPostReportResponse = {
+  data: TPayment[]
+  code: string,
+  error: string | null
+}
 
-type TPayments = any
+type TPayment = {
+  amount: number
+  created: string
+  gatewayId: string
+  modified: string
+  paymentId: string
+  projectId: string
+  userIds: string[]
+}
 
 type TPostReportFilter = {
   from?: string,

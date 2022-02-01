@@ -20,6 +20,7 @@ const SelectField = ({value, options, loading, placeholder, onChange}: TSelectFi
       onChange={onChange}
       loading={loading}
       value={value}
+      allowClear
     >
       {options.map((option, index) => (
         <Select.Option key={`${option.value}-${index}`} value={option.value}>

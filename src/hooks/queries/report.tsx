@@ -11,7 +11,9 @@ function usePostReportFilter(
     AxiosError,
     TPostReportFilter>,
 ) {
-  return useMutation(postReportFilter, options)
+  return useMutation(postReportFilter, {
+    ...options,
+  })
 }
 
 export {usePostReportFilter}
