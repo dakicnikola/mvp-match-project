@@ -12,8 +12,8 @@
     "title": "Reports",
     "subtitle": "Easily generate a report of your transactions",
     "actions": {
-      "projects": "All projects",
-      "gateways": "All gateways",
+      "projects": "Select project",
+      "gateways": "Select gateway",
       "dateFrom": "From date",
       "dateTo": "To date",
       "generateReport": "Generate report"

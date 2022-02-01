@@ -7,7 +7,11 @@ async function getProjects(): Promise<TProjectsResponse> {
   return response.data
 }
 
-type TProjectsResponse = TProject[]
+type TProjectsResponse = {
+  data: TProject[],
+  code: string,
+  error: null | string
+}
 
 type TProject = {
   projectId: string,

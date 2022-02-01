@@ -7,7 +7,11 @@ async function getGateways(): Promise<TGatewaysResponse> {
   return response.data
 }
 
-type TGatewaysResponse = TGateway[]
+type TGatewaysResponse = {
+  data: TGateway[],
+  code: string,
+  error: null | string
+}
 
 type TGateway = {
   'gatewayId': string,

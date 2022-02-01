@@ -2,14 +2,14 @@ import type {UseMutationOptions} from 'react-query'
 import {useMutation} from 'react-query'
 import {AxiosError} from 'axios'
 
-import type {TPostReportFilterParams, TPostReportResponse} from '../../services/api/report'
+import type {TPostReportFilter, TPostReportResponse} from '../../services/api/report'
 import {postReportFilter} from '../../services/api/report'
 
 
 function usePostReportFilter(
   options?: UseMutationOptions<TPostReportResponse,
     AxiosError,
-    TPostReportFilterParams>,
+    TPostReportFilter>,
 ) {
   return useMutation(postReportFilter, options)
 }

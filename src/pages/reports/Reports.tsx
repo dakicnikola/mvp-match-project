@@ -1,21 +1,24 @@
+import {Card, PageHeader} from 'antd'
+import type {Moment} from 'moment'
 import {Fragment, useState} from 'react'
 import {useTranslation} from 'react-i18next'
-import {Card, PageHeader, Space} from 'antd'
 
 import Accordion from '../../components/Accordion'
+import type {TPostReportFilter} from '../../services/api/report'
+import ReportFilters from './ReportFilters'
+
+
+export type TFilter = Omit<Omit<TPostReportFilter, 'from'>, 'to'> & {
+  from?: Moment
+  to?: Moment
+}
 
 const Reports = () => {
   const {t} = useTranslation()
 
-  // const projects = useGetProjects()
-  //
-  // const projectsData = projects.isSuccess ? projects.data.map((project) => ({
-  //   name: project.name,
-  //   id: project.projectId,
-  //   tableRows: project.
-  // }))
 
-  const [filter, setFilter] = useState({})
+  const [filter, setFilter] = useState<TFilter>({})
+
 
   return (
     <Fragment>
@@ -23,10 +26,7 @@ const Reports = () => {
         title={t('reports.title')}
         subTitle={t('reports.subtitle')}
         ghost={true}
-        extra={
-          <Space size='large'>
-          </Space>
-        }
+        extra={<ReportFilters filter={filter} setFilter={setFilter} />}
       />
       <Card bordered={false}
             style={{
