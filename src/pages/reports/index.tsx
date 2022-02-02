@@ -1,10 +1,10 @@
 import {pathname_reports} from '../../config/routes'
-import Reports from './Reports'
+import ReportsLayout from './ReportsLayout'
 
 
 const reports = {
   path: pathname_reports,
-  element: <Reports />,
+  element: <ReportsLayout />,
 }
 
 export {reports}

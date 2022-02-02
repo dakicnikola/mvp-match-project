@@ -3,11 +3,11 @@
   height: 100%;
 } */
 
-#pms-dashboard {
+#dashboard {
     min-height: 100vh;
 }
 
-#pms-dashboard .trigger {
+#dashboard .trigger {
     font-size: 18px;
     line-height: 66px;
     padding: 0 24px;
@@ -15,21 +15,31 @@
     transition: color 0.3s;
 }
 
-#pms-dashboard .trigger:hover {
-    color: #1890ff;
-}
 
 .site-layout {
     margin-left: 200px;
     transition: margin 250ms;
 }
 
+.ant-collapse > .ant-collapse-item:last-child, .ant-collapse > .ant-collapse-item:last-child > .ant-collapse-header {
+    border-radius: 10px;
+}
+
 .site-layout.site-layout-collapsed {
-    margin-left: 80px;
+    margin-left: 100px;
 }
 
 .site-layout .site-layout-background {
     background: #fff;
+}
+
+.ant-menu-item-icon {
+    display: flex !important;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+    height: 100%;
+    min-width: 24px !important;
 }
 
 .ant-upload-list-item-card-actions-btn {
@@ -42,18 +52,46 @@
     align-items: center;
     justify-content: center;
     height: 65px;
-    /*background-color: white;*/
     font-size: 32px;
-    /*font-weight: bold;*/
-    /*border: 1px solid #f0f2f5;*/
-
-    /*display: 'flex',*/
-    /*padding-left: 24px;*/
-    padding-right: 24px;
+    padding-right: 35px;
 }
 
 .ant-menu-inline, .ant-menu-vertical, .ant-menu-vertical-left {
     border-right: none;
+}
+
+.ant-select-selection-placeholder {
+    color: white;
+}
+
+.ant-select.ant-select-single.ant-select-allow-clear.ant-select-show-arrow .ant-select-arrow {
+    color: white;
+}
+
+.ant-select:not(.ant-select-customize-input) .ant-select-selector {
+    background-color: #1BC5BD;
+    color: white;
+    border-radius: 5px;
+    border-color: white;
+}
+
+.ant-picker-input input::placeholder {
+    color: white;
+}
+
+.ant-select-clear {
+    background-color: #1BC5BD;
+}
+
+.ant-select-clear {
+    background-color: #1BC5BD;
+}
+
+.ant-picker {
+    background-color: #1BC5BD;
+    color: white;
+    border-radius: 5px;
+    border-color: white;
 }
 
 .ant-layout {
@@ -72,19 +110,77 @@
     align-items: flex-start;
 }
 
-.test .ant-card-meta-title {
-    white-space: normal;
-    margin-bottom: 0 !important;
-}
-
-.ant-card-head-title {
-    white-space: normal;
-}
-
 .ant-collapse {
+    background-color: #F1FAFE;
+}
+
+.ant-collapse-header {
+    background-color: white;
+    border-radius: 10px;
+}
+
+.ant-collapse > .ant-collapse-item {
+    border: none;
+    margin-bottom: 5px;
+}
+
+.ant-collapse > .ant-collapse-item, .ant-collapse > .ant-collapse-item > .ant-collapse-header {
+    border-radius: 10px;
+}
+
+.ant-collapse-item > .ant-collapse-content {
+    border-radius: 5px;
+    border: none;
+    margin-top: 5px;
+    background-color: transparent;
+}
+
+.ant-collapse-content > .ant-collapse-content-box {
+    background-color: transparent;
+}
+
+.ant-table-tbody tr:nth-child(2n+1) {
+    background-color: transparent;
+}
+
+.ant-table-container table > thead > tr:first-child th {
+    background-color: white;
+    border: none;
+}
+
+.ant-table-cell:first-child {
+    text-align: left;
+}
+
+.ant-table-cell {
+    text-align: center;
+}
+
+.ant-table-container table > thead > tr th {
+    text-align: center;
+}
+
+.ant-table-container table > thead > tr th:last-child {
+    text-align: end;
+}
+
+.ant-table-tbody > tr > td {
     border: none
 }
 
-.ant-card-actions li {
-    margin: 6px 0;
+.ant-table-tbody tr:nth-child(2n) {
+    background-color: white;
+}
+
+.ant-table {
+    background-color: transparent;
+}
+
+h5.ant-typography, .ant-typography h5 {
+    margin-bottom: 0;
+}
+
+
+.ant-collapse {
+    border: none
 }

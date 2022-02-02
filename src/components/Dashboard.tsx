@@ -76,7 +76,7 @@ function Dashboard() {
 
 
   return (
-    <Layout id='pms-dashboard'>
+    <Layout id='dashboard'>
       <Layout.Header className='site-layout-background' style={{zIndex: 1, width: '100%', display: 'flex'}}>
         <Space className='logo' style={{height: '100%'}} align={'center'}>
           <Icon component={CompanyLogoSvg} />
@@ -84,13 +84,6 @@ function Dashboard() {
         <Space>
           <Icon component={MenuFoldSvg} style={{display: 'flex'}} onClick={toggle} />
         </Space>
-        <div style={{
-          display: 'flex',
-          justifyContent: 'space-between',
-          alignItems: 'center',
-        }}>
-
-        </div>
       </Layout.Header>
       <Layout className={collapsed ? 'site-layout site-layout-collapsed' : 'site-layout'}>
         <Layout.Sider
@@ -98,10 +91,11 @@ function Dashboard() {
           trigger={null}
           collapsible
           collapsed={collapsed}
-          width={100}
+          collapsedWidth={100}
           style={{
+            marginTop: 20,
             overflow: 'auto',
-            height: '100vh',
+            height: '100%',
             position: 'fixed',
             left: 0,
           }}
@@ -119,11 +113,7 @@ function Dashboard() {
                            paddingLeft: 35,
                            paddingRight: 35,
                          }}>
-                <Link
-                  to={link.path}
-                >
-                  {t(link.i18n)}
-                </Link>
+                <Link to={link.path}>{t(link.i18n)}</Link>
               </Menu.Item>
             ))}
           </Menu>

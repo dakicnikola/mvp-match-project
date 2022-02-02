@@ -1,14 +1,15 @@
 import React, {Fragment, useEffect, useState} from 'react'
-import {Collapse, Space, Table, Typography} from 'antd'
+import {Card, Collapse, Layout, Space, Table, Typography} from 'antd'
 import {useTranslation} from 'react-i18next'
-import {TReport} from '../pages/reports/Reports'
 import moment from 'moment'
-import NoReports from './NoReports'
+
+import {TReport} from './ReportsLayout'
 
 type TAccordionProps = {
   data: TReport
   oneProject: boolean
   oneGateway: boolean
+  loading: boolean
 }
 
 type TPanel = {
@@ -45,7 +46,7 @@ const formatPrice = (price: number, decimals = 0) => {
   return priceParts.join('')
 }
 
-const Accordion = ({data, oneProject, oneGateway}: TAccordionProps) => {
+const Report = ({data, oneProject, oneGateway, loading}: TAccordionProps) => {
   const {t} = useTranslation('translation', {keyPrefix: 'reports.accordion'})
 
   const [columns, setColumns] = useState<TColumn[]>([])
@@ -68,7 +69,7 @@ const Accordion = ({data, oneProject, oneGateway}: TAccordionProps) => {
         dataIndex: 'amount',
         key: 'amount',
         render: (amount: number) =>
-          <Space style={{justifyContent: 'center', width: '100%'}}>
+          <Space style={{justifyContent: 'right', width: '100%'}}>
             <Typography>{formatPrice(amount)}</Typography>
           </Space>,
       },
@@ -84,9 +85,11 @@ const Accordion = ({data, oneProject, oneGateway}: TAccordionProps) => {
     setColumns(defaultColumns)
   }, [oneProject, oneGateway, t])
 
+  let totalPrice = 0
   const dataSource: TPanel[] = (!oneProject || oneGateway) ?
     Object.keys(data.paymentsByProject).map((projectId) => {
       const project = data.paymentsByProject[projectId]
+      totalPrice += project.totalAmount
       return {
         name: project.name,
         id: projectId,
@@ -96,6 +99,7 @@ const Accordion = ({data, oneProject, oneGateway}: TAccordionProps) => {
     }) :
     Object.keys(data.paymentsByGateway).map((gatewayId) => {
       const gateway = data.paymentsByGateway[gatewayId]
+      totalPrice += gateway.totalAmount
       return {
         name: gateway.name,
         id: gatewayId,
@@ -106,38 +110,49 @@ const Accordion = ({data, oneProject, oneGateway}: TAccordionProps) => {
 
 
   return (
-    <Fragment>
+    <Card bordered={false} style={{background: 'white', height: '100%'}}
+          loading={loading}
+          bodyStyle={{height: '100%'}}
+    >
       {Boolean(dataSource.length) &&
         <Fragment>
-          {oneProject && oneGateway && (
-            <Table columns={columns} dataSource={dataSource[0]?.tableRows.map((row, key) => ({...row, key}))}
-                   pagination={false} />
+          <Card style={{background: '#F1FAFE', borderRadius: 10}} bordered={false}>
+            {oneProject && oneGateway && (
+              <Table columns={columns} dataSource={dataSource[0]?.tableRows.map((row, key) => ({...row, key}))}
+                     pagination={false} />
+            )}
+            {!(oneProject && oneGateway) &&
+              <Collapse accordion>
+                {dataSource.map((panel) => (
+                  <Collapse.Panel
+                    header={<Space style={{justifyContent: 'space-between', width: '100%'}}>
+                      <Typography.Title level={5}>{panel.name}</Typography.Title>
+                      <Typography.Title
+                        level={5}>{t('table.totalAmount', {amount: panel.totalAmount})}</Typography.Title>
+                    </Space>}
+                    key={panel.id}
+                    style={{background: 'transparent', borderRadius: '10px'}}
+                    showArrow={false}
+                  >
+                    <Table columns={columns} dataSource={panel.tableRows.map((row, key) => ({...row, key}))}
+                           pagination={false} />
+                  </Collapse.Panel>
+                ))}
+              </Collapse>}
+          </Card>
+          {((!oneProject && !oneGateway) || (oneProject && oneGateway)) && (
+            <Layout style={{background: '#F1FAFE', borderRadius: 10, padding: 20, marginTop: 30, height: 53}}>
+              <Space align={'center'} style={{height: '100%'}}>
+                <Typography.Title level={5}>
+                  {t('table.totalAmount', {amount: formatPrice(totalPrice, 0)})}
+                </Typography.Title>
+              </Space>
+            </Layout>
           )}
-          {!(oneProject && oneGateway) &&
-            <Collapse accordion>
-              {dataSource.map((panel) => (
-                <Collapse.Panel
-                  header={<Space style={{justifyContent: 'space-between', width: '100%'}}>
-                    <Typography.Title level={5}>{panel.name}</Typography.Title>
-                    <Typography.Title
-                      level={5}>{t('table.totalAmount', {amount: panel.totalAmount})}</Typography.Title>
-                  </Space>}
-                  key={panel.id}
-                  style={{
-                    background: '#FFFFFF',
-                    borderRadius: '10px',
-                  }}
-                  showArrow={false}
-                >
-                  <Table columns={columns} dataSource={panel.tableRows.map((row, key) => ({...row, key}))}
-                         pagination={false} />
-                </Collapse.Panel>
-              ))}
-            </Collapse>}
-        </Fragment>}
-      {!dataSource.length && <NoReports />}
-    </Fragment>
+        </Fragment>
+      }
+    </Card>
   )
 }
 
-export default Accordion
+export default Report

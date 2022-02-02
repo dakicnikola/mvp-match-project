@@ -1,14 +1,14 @@
-import {Button, Card, PageHeader, Space} from 'antd'
+import {Button, Layout, PageHeader, Space} from 'antd'
 import type {Moment} from 'moment'
-import {Fragment, useRef, useState} from 'react'
+import React, {Fragment, useRef, useState} from 'react'
 import {useTranslation} from 'react-i18next'
-
-import Accordion from '../../components/Accordion'
 import type {TPostReportFilter} from '../../services/api/report'
 import ReportFilters from './ReportFilters'
 import {usePostReportFilter} from '../../hooks/queries/report'
 import {useGetProjects} from '../../hooks/queries/projects'
 import {useGetGateways} from '../../hooks/queries/gateways'
+import NoReports from '../../components/NoReports'
+import Report from './Report'
 
 
 export type TFilter = Omit<Omit<TPostReportFilter, 'from'>, 'to'> & {
@@ -46,7 +46,7 @@ interface TPayment {
   paymentId: string
 }
 
-const Reports = () => {
+const ReportsLayout = () => {
   const {t} = useTranslation()
   const [filter, setFilter] = useState<TFilter>({})
 
@@ -149,23 +149,26 @@ const Reports = () => {
                            gateways={gateways.isSuccess && gateways.data.code === '200' ? gateways.data.data : []}
                            gatewaysLoading={gateways.isLoading}
             />
-            <Button type={'primary'} onClick={generateReport} loading={postReport.isLoading}>
+            <Button type={'primary'} onClick={generateReport} loading={postReport.isLoading} style={{
+              borderRadius: 5
+            }}>
               {t('reports.actions.generateReport')}
             </Button>
           </Space>}
       />
-      <Card bordered={false} style={{borderRadius: 10, background: '#F1FAFE', height: '100%'}}
+      <Layout style={{height: '100%'}}>
+        {!postReport.data?.data.length && <NoReports />}
+        {Boolean(postReport.data?.data.length) &&
+          <Report
+            data={report}
             loading={postReport.isLoading}
-            bodyStyle={{height: '100%'}}
-      >
-        <Accordion
-          data={report}
-          oneGateway={filteredBy.current.oneGateway}
-          oneProject={filteredBy.current.oneProject}
-        />
-      </Card>
+            oneGateway={filteredBy.current.oneGateway}
+            oneProject={filteredBy.current.oneProject}
+          />
+        }
+      </Layout>
     </Fragment>
   )
 }
 
-export default Reports
+export default ReportsLayout
