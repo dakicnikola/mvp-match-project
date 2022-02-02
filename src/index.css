@@ -196,6 +196,10 @@ h5.ant-typography, .ant-typography h5 {
     border: none
 }
 
+.ant-layout {
+    position: relative;
+}
+
 #report-container-div > div:first-child {
     flex: 1
 }

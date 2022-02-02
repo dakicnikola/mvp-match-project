@@ -1,4 +1,4 @@
-import {Button, Layout, PageHeader, Space, Spin} from 'antd'
+import {Button, Layout, PageHeader, Space} from 'antd'
 import type {Moment} from 'moment'
 import React, {Fragment, useRef, useState} from 'react'
 import {useTranslation} from 'react-i18next'
@@ -9,6 +9,7 @@ import {useGetProjects} from '../../hooks/queries/projects'
 import {useGetGateways} from '../../hooks/queries/gateways'
 import NoReports from '../../components/NoReports'
 import Report from './Report'
+import Spinner from '../../components/Spinner'
 
 
 export type TFilter = Omit<Omit<TPostReportFilter, 'from'>, 'to'> & {
@@ -158,7 +159,7 @@ const ReportsLayout = () => {
       />
       <Layout style={{height: '100%'}}>
         {postReport.isLoading &&
-          <Spin spinning />
+          <Spinner spinning />
         }
         {!postReport.data?.data.length && !postReport.isLoading && <NoReports />}
         {Boolean(postReport.data?.data.length) &&

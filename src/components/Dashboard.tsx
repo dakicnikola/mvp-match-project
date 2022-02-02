@@ -11,7 +11,6 @@ import {
   pathname_settings,
   pathname_transaction,
 } from '../config/routes'
-
 import CardSvg from './logos/CardSvg'
 import BoardSvg from './logos/BoardSvg'
 import TransactionSvg from './logos/TransactionSvg'
@@ -24,7 +23,7 @@ import UserIcon from './UserIcon'
 
 type MenuLink = {
   path: string
-  icon: ReactElement | any
+  icon: ReactElement
   i18n: string
   disabled: boolean
 }
@@ -75,7 +74,6 @@ function Dashboard() {
     location.pathname.startsWith(menuLink.path),
   )
 
-
   return (
     <Layout id='dashboard'>
       <Layout.Header className='site-layout-background' style={{zIndex: 1, width: '100%', display: 'flex'}}>
@@ -115,10 +113,8 @@ function Dashboard() {
             {menuLinks.map(link => (
               <Menu.Item key={link.path} icon={link.icon}
                          disabled={link.disabled}
-                         style={{
-                           paddingLeft: 35,
-                           paddingRight: 35,
-                         }}>
+                         style={{paddingLeft: 35, paddingRight: 35}}
+              >
                 <Link to={link.path}>{t(link.i18n)}</Link>
               </Menu.Item>
             ))}

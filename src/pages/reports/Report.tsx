@@ -112,7 +112,7 @@ const Report = ({data, oneProject, oneGateway, loading}: TAccordionProps) => {
     })
 
   const pieChartData = dataSource.map((panel, index) => ({
-    title: panel.name, value: panel.totalAmount, color: defaultPieChartColors[index],
+    title: panel.name, value: panel.totalAmount, color: defaultPieChartColors[index % defaultPieChartColors.length],
   }))
 
   const displayChart = (oneProject && !oneGateway) || (oneGateway && !oneProject)
