@@ -1,5 +1,5 @@
 import React, {Fragment, useEffect, useState} from 'react'
-import {Card, Collapse, Layout, Space, Table, Typography} from 'antd'
+import {Card, Col, Collapse, Layout, Row, Space, Table, Typography} from 'antd'
 import {useTranslation} from 'react-i18next'
 import moment from 'moment'
 
@@ -115,6 +115,7 @@ const Report = ({data, oneProject, oneGateway, loading}: TAccordionProps) => {
     title: panel.name, value: panel.totalAmount, color: defaultPieChartColors[index],
   }))
 
+  const displayChart = (oneProject && !oneGateway) || (oneGateway && !oneProject)
 
   return (
     <Card bordered={false} style={{background: 'white', height: '100%'}}
@@ -123,63 +124,69 @@ const Report = ({data, oneProject, oneGateway, loading}: TAccordionProps) => {
     >
       {Boolean(dataSource.length) &&
         <Fragment>
-          <Space align={'start'} style={{width: '100%', height: '100%'}} id={'report-container-div'}>
-            <Card style={{background: '#F1FAFE', borderRadius: 10}} bordered={false}>
-              {oneProject && oneGateway && (
-                <Table columns={columns} dataSource={dataSource[0]?.tableRows.map((row, key) => ({...row, key}))}
-                       pagination={false} />
-              )}
-              {!(oneProject && oneGateway) &&
-                <Collapse accordion>
-                  {dataSource.map((panel) => (
-                    <Collapse.Panel
-                      header={<Space style={{justifyContent: 'space-between', width: '100%'}}>
-                        <Typography.Title level={5}>{panel.name}</Typography.Title>
-                        <Typography.Title
-                          level={5}>{t('table.totalAmount', {amount: formatPrice(panel.totalAmount, 0)})}</Typography.Title>
-                      </Space>}
-                      key={panel.id}
-                      style={{background: 'transparent', borderRadius: '10px'}}
-                      showArrow={false}
-                    >
-                      <Table columns={columns} dataSource={panel.tableRows.map((row, key) => ({...row, key}))}
-                             pagination={false} />
-                    </Collapse.Panel>
-                  ))}
-                </Collapse>}
-            </Card>
-            {((oneProject && !oneGateway) || (oneGateway && !oneProject)) &&
-              <Card style={{borderRadius: 10, maxWidth: 550}} bordered={false}>
-                <Space style={{background: '#F1FAFE', borderRadius: 10, padding: 20, height: 53, width: '100%'}}
-                       size={'large'}>
-                  {pieChartData.map((panel) => (
-                    <Space size={'small'}>
-                      <div style={{width: 15, height: 15, backgroundColor: panel.color}} />
-                      <Typography.Text>{panel.title}</Typography.Text>
-                    </Space>
-                  ))}
-                </Space>
-                <PieChart
-                  radius={20}
-                  lineWidth={45}
-                  label={({dataEntry}) => Math.round(dataEntry.percentage) + '%'}
-                  labelPosition={100 - 45 / 2}
-                  labelStyle={{fill: '#ffffff', pointerEvents: 'none', fontSize: 4}}
-                  data={pieChartData}
-                />
-                <Space style={{background: '#F1FAFE', borderRadius: 10, padding: 20, height: 53, width: '100%'}}
-                       size={'large'}>
-
-                  <Typography.Title level={5}>
-                    {oneProject ?
-                      t('table.totalProjectAmount', {amount: formatPrice(totalPrice, 0)}) :
-                      t('table.totalGatewayAmount', {amount: formatPrice(totalPrice, 0)})
-                    }
-                  </Typography.Title>
-                </Space>
+          <Row>
+            <Col span={displayChart ? 16 : 24}>
+              <Card style={{background: '#F1FAFE', borderRadius: 10}} bordered={false}>
+                {oneProject && oneGateway && (
+                  <Table columns={columns} dataSource={dataSource[0]?.tableRows.map((row, key) => ({...row, key}))}
+                         pagination={false} />
+                )}
+                {!(oneProject && oneGateway) &&
+                  <Collapse accordion>
+                    {dataSource.map((panel) => (
+                      <Collapse.Panel
+                        header={<Space style={{justifyContent: 'space-between', width: '100%'}}>
+                          <Typography.Title level={5}>{panel.name}</Typography.Title>
+                          <Typography.Title
+                            level={5}>{t('table.totalAmount', {amount: formatPrice(panel.totalAmount, 0)})}</Typography.Title>
+                        </Space>}
+                        key={panel.id}
+                        style={{background: 'transparent', borderRadius: '10px'}}
+                        showArrow={false}
+                      >
+                        <Table columns={columns} dataSource={panel.tableRows.map((row, key) => ({...row, key}))}
+                               pagination={false} />
+                      </Collapse.Panel>
+                    ))}
+                  </Collapse>}
               </Card>
+            </Col>
+            {displayChart &&
+              <Col span={8}>
+                <Card style={{borderRadius: 10}} bordered={false} bodyStyle={{padding: '0 0 0 30px'}}>
+                  <Space style={{background: '#F1FAFE', borderRadius: 10, padding: 20, height: 53, width: '100%'}}
+                         size={'large'}>
+                    {pieChartData.map((panel, index) => (
+                      <Space size={'small'} key={`pie-chart-${index}`}>
+                        <div style={{width: 15, height: 15, backgroundColor: panel.color}} />
+                        <Typography.Text>{panel.title}</Typography.Text>
+                      </Space>
+                    ))}
+                  </Space>
+                  <Space direction={'vertical'} align={'center'} style={{width: '100%'}}>
+                    <PieChart
+                      radius={45}
+                      lineWidth={50}
+                      label={({dataEntry}) => Math.round(dataEntry.percentage) + '%'}
+                      labelPosition={100 - 50 / 2}
+                      labelStyle={{fill: '#ffffff', pointerEvents: 'none', fontSize: 4}}
+                      data={pieChartData}
+                    />
+                  </Space>
+                  <Space style={{background: '#F1FAFE', borderRadius: 10, padding: 20, height: 53, width: '100%'}}
+                         size={'large'}>
+
+                    <Typography.Title level={5}>
+                      {oneProject ?
+                        t('table.totalProjectAmount', {amount: formatPrice(totalPrice, 0)}) :
+                        t('table.totalGatewayAmount', {amount: formatPrice(totalPrice, 0)})
+                      }
+                    </Typography.Title>
+                  </Space>
+                </Card>
+              </Col>
             }
-          </Space>
+          </Row>
           {((!oneProject && !oneGateway) || (oneProject && oneGateway)) && (
             <Layout style={{background: '#F1FAFE', borderRadius: 10, padding: 20, marginTop: 30, height: 53}}>
               <Space align={'center'} style={{height: '100%'}}>

@@ -46,6 +46,10 @@
     opacity: 1;
 }
 
+.ant-picker-clear {
+    background: #1BC5BD;
+}
+
 
 .logo {
     display: flex;
@@ -73,6 +77,10 @@
     color: white;
     border-radius: 5px;
     border-color: white;
+}
+
+.ant-picker-input input {
+    color: white;
 }
 
 .ant-picker-input input::placeholder {
