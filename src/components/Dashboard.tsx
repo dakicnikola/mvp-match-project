@@ -19,6 +19,7 @@ import ReportsSvg from './logos/ReportsSvg'
 import SettingsSvg from './logos/SettingsSvg'
 import CompanyLogoSvg from './logos/CompanyLogoSvg'
 import MenuFoldSvg from './logos/MenuFoldSvg'
+import UserIcon from './UserIcon'
 
 
 type MenuLink = {
@@ -81,8 +82,13 @@ function Dashboard() {
         <Space className='logo' style={{height: '100%'}} align={'center'}>
           <Icon component={CompanyLogoSvg} />
         </Space>
-        <Space>
-          <Icon component={MenuFoldSvg} style={{display: 'flex'}} onClick={toggle} />
+        <Space style={{width: '100%', justifyContent: 'space-between'}} id={'extra-header-space'}>
+          <Space>
+            <Icon component={MenuFoldSvg} style={{display: 'flex'}} onClick={toggle} />
+          </Space>
+          <Space>
+            <UserIcon firstName={'John'} lastName={'Doe'} />
+          </Space>
         </Space>
       </Layout.Header>
       <Layout className={collapsed ? 'site-layout site-layout-collapsed' : 'site-layout'}>

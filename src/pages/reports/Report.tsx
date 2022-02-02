@@ -167,6 +167,7 @@ const Report = ({data, oneProject, oneGateway, loading}: TAccordionProps) => {
                     <PieChart
                       radius={45}
                       lineWidth={50}
+                      paddingAngle={1}
                       label={({dataEntry}) => Math.round(dataEntry.percentage) + '%'}
                       labelPosition={100 - 50 / 2}
                       labelStyle={{fill: '#ffffff', pointerEvents: 'none', fontSize: 4}}

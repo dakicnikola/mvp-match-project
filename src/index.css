@@ -172,6 +172,10 @@
     text-align: end;
 }
 
+.ant-select-single.ant-select-open .ant-select-selection-item {
+    color: white
+}
+
 .ant-table-tbody > tr > td {
     border: none
 }
@@ -194,4 +198,8 @@ h5.ant-typography, .ant-typography h5 {
 
 #report-container-div > div:first-child {
     flex: 1
+}
+
+#extra-header-space .ant-space-item {
+    display: flex
 }
