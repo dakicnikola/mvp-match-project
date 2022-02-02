@@ -1,5 +1,5 @@
 import React, {Fragment, useEffect, useState} from 'react'
-import {Card, Col, Collapse, Layout, Row, Space, Table, Typography} from 'antd'
+import {Breadcrumb, Card, Col, Collapse, Layout, Row, Space, Table, Typography} from 'antd'
 import {useTranslation} from 'react-i18next'
 import moment from 'moment'
 
@@ -126,7 +126,12 @@ const Report = ({data, oneProject, oneGateway, loading}: TAccordionProps) => {
         <Fragment>
           <Row>
             <Col span={displayChart ? 16 : 24}>
-              <Card style={{background: '#F1FAFE', borderRadius: 10}} bordered={false}>
+              <Card style={{background: '#F1FAFE', borderRadius: 10}} bordered={false} title={
+                <Breadcrumb separator={<Space>|</Space>}>
+                  <Breadcrumb.Item>{data.projectName}</Breadcrumb.Item>
+                  <Breadcrumb.Item>{data.gatewayName}</Breadcrumb.Item>
+                </Breadcrumb>
+              }>
                 {oneProject && oneGateway && (
                   <Table columns={columns} dataSource={dataSource[0]?.tableRows.map((row, key) => ({...row, key}))}
                          pagination={false} />

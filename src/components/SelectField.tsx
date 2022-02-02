@@ -11,7 +11,7 @@ type TSelectFieldProps = {
 
 type TOption = {
   title: string,
-  value: string
+  value: string | null
 }
 
 const SelectField = ({value, options, loading, placeholder, onChange}: TSelectFieldProps) => {

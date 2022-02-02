@@ -28,8 +28,8 @@ const ReportFilters = ({
                        }: TReportsFilterProps) => {
   const {t} = useTranslation()
 
-  const handleSelectChange = (fieldName: 'projectId' | 'gatewayId') => (value: string) => {
-    setFilter(prevState => ({...prevState, [fieldName]: value}))
+  const handleSelectChange = (fieldName: 'projectId' | 'gatewayId') => (value: string | null) => {
+    setFilter(prevState => ({...prevState, [fieldName]: value ?? undefined}))
   }
 
   const handleDateChange = (fieldName: 'from' | 'to') => (value: Moment | null) => {
@@ -39,9 +39,17 @@ const ReportFilters = ({
     }))
   }
 
-  const selectProjectOptions = projects.map((project) => ({title: project.name, value: project.projectId}))
+  const selectProjectOptions =
+    [
+      {title: t('reports.allProjects'), value: null},
+      ...projects.map((project) => ({title: project.name, value: project.projectId})),
+    ]
 
-  const selectGatewayOptions = gateways.map((gateway) => ({title: gateway.name, value: gateway.gatewayId}))
+  const selectGatewayOptions =
+    [
+      {title: t('reports.allGateways'), value: null},
+      ...gateways.map((gateway) => ({title: gateway.name, value: gateway.gatewayId})),
+    ]
 
 
   return (

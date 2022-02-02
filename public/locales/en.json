@@ -13,6 +13,8 @@
   "reports": {
     "title": "Reports",
     "subtitle": "Easily generate a report of your transactions",
+    "allProjects": "All projects",
+    "allGateways": "All gateways",
     "actions": {
       "projects": "Select project",
       "gateways": "Select gateway",

@@ -31,12 +31,16 @@ export type TReport = {
   paymentsByProject: TPaymentsByEntity
   gatewayTotalAmount: number
   paymentsByGateway: TPaymentsByEntity
+  projectName: string
+  gatewayName: string
 }
 
 const defaultReport: TReport = {
   paymentsByProject: {},
   paymentsByGateway: {},
   gatewayTotalAmount: 0,
+  projectName: '',
+  gatewayName: '',
 }
 
 interface TPayment {
@@ -107,17 +111,30 @@ const ReportsLayout = () => {
       }
       if (!filteredBy.current.oneProject || filteredBy.current.oneGateway) {
         setReport(
-          data.data.reduce(allProjectsOrOneGatewayReducer, {
+          {
+            ...data.data.reduce(allProjectsOrOneGatewayReducer, {
+              paymentsByProject: {},
+              paymentsByGateway: {},
+              gatewayTotalAmount: 0,
+              projectName: '',
+              gatewayName: '',
+            }),
+            projectName: (filter.projectId && projects.data?.projectsById[filter.projectId]?.name) || t('reports.allProjects'),
+            gatewayName: (filter.gatewayId && gateways.data?.gatewaysById[filter.gatewayId]?.name) || t('reports.allGateways'),
+          })
+
+      } else {
+        setReport({
+          ...data.data.reduce(oneProjectAndAllGatewaysReducer, {
             paymentsByProject: {},
             paymentsByGateway: {},
             gatewayTotalAmount: 0,
-          }))
-      } else {
-        setReport((data.data.reduce(oneProjectAndAllGatewaysReducer, {
-          paymentsByProject: {},
-          paymentsByGateway: {},
-          gatewayTotalAmount: 0,
-        })))
+            projectName: '',
+            gatewayName: '',
+          }),
+          projectName: (filter.projectId && projects.data?.projectsById[filter.projectId]?.name) || t('reports.allProjects'),
+          gatewayName: (filter.gatewayId && gateways.data?.gatewaysById[filter.gatewayId]?.name) || t('reports.allGateways'),
+        })
       }
     },
   })
