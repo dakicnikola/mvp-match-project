@@ -27,6 +27,8 @@
       },
       "table": {
         "totalAmount": "TOTAL: {{amount}}",
+        "totalGatewayAmount": "GATEWAY TOTAL | {{amount}}",
+        "totalProjectAmount": "PROJECT TOTAL | {{amount}}",
         "columns": {
           "date": "Date",
           "transactionId": "Transaction ID",

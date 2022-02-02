@@ -18,10 +18,7 @@ function AuthenticatedApp() {
   const location = useLocation()
 
   useEffect(() => {
-    if (location.pathname === pathname_root) {
-      debugger
-      navigate(pathname_reports)
-    }
+    navigate(pathname_reports)
   }, [location.pathname, navigate])
 
   return (

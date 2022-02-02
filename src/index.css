@@ -100,7 +100,7 @@
 
 .ant-layout-header {
     background: white;
-    border-bottom: 1px solid #E5E5E5;
+    border-bottom: 2px solid #F3F6F9;
     padding: 0 35px
 }
 
@@ -180,7 +180,10 @@ h5.ant-typography, .ant-typography h5 {
     margin-bottom: 0;
 }
 
-
 .ant-collapse {
     border: none
+}
+
+#report-container-div > div:first-child {
+    flex: 1
 }

@@ -1,4 +1,4 @@
-import {Button, Layout, PageHeader, Space} from 'antd'
+import {Button, Layout, PageHeader, Space, Spin} from 'antd'
 import type {Moment} from 'moment'
 import React, {Fragment, useRef, useState} from 'react'
 import {useTranslation} from 'react-i18next'
@@ -150,14 +150,17 @@ const ReportsLayout = () => {
                            gatewaysLoading={gateways.isLoading}
             />
             <Button type={'primary'} onClick={generateReport} loading={postReport.isLoading} style={{
-              borderRadius: 5
+              borderRadius: 5,
             }}>
               {t('reports.actions.generateReport')}
             </Button>
           </Space>}
       />
       <Layout style={{height: '100%'}}>
-        {!postReport.data?.data.length && <NoReports />}
+        {postReport.isLoading &&
+          <Spin spinning />
+        }
+        {!postReport.data?.data.length && !postReport.isLoading && <NoReports />}
         {Boolean(postReport.data?.data.length) &&
           <Report
             data={report}
